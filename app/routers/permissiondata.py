@@ -1,7 +1,9 @@
-from fastapi import APIRouter,HTTPException
+from fastapi import APIRouter,HTTPException,UploadFile, File
 from pydantic import BaseModel
 import asyncio
 from pyppeteer import launch
+from fastapi.responses import JSONResponse
+from openpyxl import load_workbook
 
 
 router = APIRouter(
@@ -25,3 +27,16 @@ async def capture_screenshot(urls:str,namesnap:str):
     await browser.close()
     
     return {"message": "Screenshot captured"}
+
+@router.post("/upload/")
+async def upload_excel_file(file: UploadFile = File(...)):
+    try:
+        # Save the uploaded file to a temporary location
+        file_path = f"temp_{file.filename}"
+        with open(file_path, "wb") as f:
+            f.write(file.file.read())
+        
+        return {"message": "File uploaded successfully"}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"message": "An error occurred", "error": str(e)})
+

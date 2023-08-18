@@ -5,4 +5,7 @@ mysql-connector-python==8.1.0
 pyodbc==4.0.39
 pandas==2.0.3
 passlib==1.7.4
-fastapi-sessions==0.3.2
+pyppeteer==0.4.6
+aiodns==3.0.0
+pycares==4.3.0
+openpyxl==3.1.2
