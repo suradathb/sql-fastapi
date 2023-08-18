@@ -1,6 +1,7 @@
 from typing import Union
 from fastapi import FastAPI
-from .routers import users
+# from app.routers import users,socket
+from routers import users,socket,permissiondata
 
 app = FastAPI()
 
@@ -11,9 +12,7 @@ def read_root():
 
 def config_router():
       app.include_router(users.router)
-
+      app.include_router(socket.router)
+      app.include_router(permissiondata.router)
 config_router()
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
